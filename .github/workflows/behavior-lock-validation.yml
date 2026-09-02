@@ -1,0 +1,47 @@
+name: Behavior Lock validation
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  record-evidence:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo-to-codex
+        uses: actions/checkout@v7
+        with:
+          path: repo-to-codex
+
+      - name: Checkout behavior-lock
+        uses: actions/checkout@v7
+        with:
+          repository: ririri-rgb/behavior-lock
+          ref: 91a4b1a0f1bdb55f48c2e6f77338f7a9481f6ffd
+          path: behavior-lock
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+
+      - name: Build repo-to-codex
+        working-directory: repo-to-codex
+        run: |
+          npm install --ignore-scripts
+          npm run build
+
+      - name: Build behavior-lock
+        working-directory: behavior-lock
+        run: |
+          npm install --ignore-scripts
+          npm run build
+
+      - name: Record behavior evidence
+        working-directory: repo-to-codex
+        run: |
+          node ../behavior-lock/dist/cli.js record
+          echo '--- baseline.json ---'
+          cat .behavior-lock/baseline.json
