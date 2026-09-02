@@ -27,18 +27,9 @@ Coding agents work best when a repository tells them how to install dependencies
 
 ## Quick Start
 
-Node.js 20+ is required. The npm package is not published yet; until the first npm release, install from source:
+Node.js 20+ is required.
 
-```bash
-git clone https://github.com/ririri-rgb/repo-to-codex.git
-cd repo-to-codex
-npm install
-npm run build
-npm link
-repo-to-codex .
-```
-
-After the npm release, the intended one-command entry point is:
+Run directly from npm:
 
 ```bash
 npx repo-to-codex .
@@ -47,13 +38,24 @@ npx repo-to-codex .
 The default invocation only previews the files it would generate. To save them:
 
 ```bash
-repo-to-codex . --write
+npx repo-to-codex . --write
 ```
 
 Existing generated targets are protected. If `AGENTS.md` or one of the `.codex/` files already exists, `--write` stops instead of overwriting it. Review the preview first and use `--force` only when replacement is intentional.
 
 ```bash
-repo-to-codex . --write --force
+npx repo-to-codex . --write --force
+```
+
+For local development from source:
+
+```bash
+git clone https://github.com/ririri-rgb/repo-to-codex.git
+cd repo-to-codex
+npm install
+npm run build
+npm link
+repo-to-codex .
 ```
 
 ## Example
