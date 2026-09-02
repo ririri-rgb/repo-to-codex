@@ -1,0 +1,36 @@
+name: Dogfood
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  dogfood:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo-to-codex
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install dependencies
+        run: npm install --ignore-scripts
+      - name: Build CLI
+        run: npm run build
+      - name: Analyze repo-to-codex
+        run: |
+          node dist/src/cli/index.js . | tee /tmp/self-dogfood.txt
+          grep -q "Generated preview" /tmp/self-dogfood.txt
+          grep -q "Found test command" /tmp/self-dogfood.txt
+      - name: Checkout real repository fixture
+        uses: actions/checkout@v4
+        with:
+          repository: ririri-rgb/claw-code
+          path: dogfood/claw-code
+      - name: Analyze real repository without writing
+        run: |
+          node dist/src/cli/index.js dogfood/claw-code | tee /tmp/real-dogfood.txt
+          grep -q "Generated preview" /tmp/real-dogfood.txt
+          test -z "$(git -C dogfood/claw-code status --porcelain)"
