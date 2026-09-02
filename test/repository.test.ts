@@ -1,12 +1,10 @@
 import assert from 'node:assert/strict';
 import path from 'node:path';
 import test from 'node:test';
-import { fileURLToPath } from 'node:url';
 import { analyzeRepository } from '../src/analyzers/repository.js';
 import { generateAgentsMd } from '../src/generators/agents.js';
 
-const here = path.dirname(fileURLToPath(import.meta.url));
-const fixture = (name: string): string => path.join(here, 'fixtures', name);
+const fixture = (name: string): string => path.resolve(process.cwd(), 'test', 'fixtures', name);
 
 test('detects Next.js TypeScript repository and commands', async () => {
   const analysis = await analyzeRepository(fixture('nextjs'));
