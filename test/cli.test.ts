@@ -4,11 +4,9 @@ import os from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
 import { spawnSync } from 'node:child_process';
-import { fileURLToPath } from 'node:url';
 
-const here = path.dirname(fileURLToPath(import.meta.url));
-const fixture = path.join(here, 'fixtures', 'nextjs');
-const cli = path.join(here, '..', 'src', 'cli', 'index.js');
+const fixture = path.resolve(process.cwd(), 'test', 'fixtures', 'nextjs');
+const cli = path.resolve(process.cwd(), 'dist', 'src', 'cli', 'index.js');
 
 test('CLI previews by default and writes only with --write', async () => {
   const temp = await mkdtemp(path.join(os.tmpdir(), 'repo-to-codex-'));
