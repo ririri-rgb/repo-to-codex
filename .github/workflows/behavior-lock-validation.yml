@@ -1,6 +1,8 @@
-name: Behavior Lock validation
+name: Behavior Lock
 
 on:
+  push:
+    branches: [main]
   pull_request:
   workflow_dispatch:
 
@@ -8,7 +10,7 @@ permissions:
   contents: read
 
 jobs:
-  record-evidence:
+  verify:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo-to-codex
@@ -39,9 +41,6 @@ jobs:
           npm install --ignore-scripts
           npm run build
 
-      - name: Record behavior evidence
+      - name: Verify CLI behavior
         working-directory: repo-to-codex
-        run: |
-          node ../behavior-lock/dist/cli.js record
-          echo '--- baseline.json ---'
-          cat .behavior-lock/baseline.json
+        run: node ../behavior-lock/dist/cli.js verify
