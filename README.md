@@ -16,9 +16,10 @@ Coding agents work best when a repository tells them how to install dependencies
 
 - Detects JavaScript/TypeScript and Python repositories.
 - Recognizes Node.js, Next.js, React, Vite, FastAPI, Flask, and Django.
-- Detects npm, pnpm, yarn, pip, Poetry, and uv.
+- Detects npm, pnpm, yarn, pip, Poetry, and uv from lockfiles or explicit project metadata.
 - Reads `package.json`, Python project files, lockfiles, and `Makefile` targets.
 - Detects install/dev/test/lint/format/build/typecheck commands without inventing missing commands.
+- Leaves package-manager-specific commands out when the package manager cannot be established from repository evidence.
 - Describes common architecture directories using explicit evidence.
 - Generates `AGENTS.md` plus `.codex/instructions.md`, `.codex/architecture.md`, and `.codex/commands.md`.
 - Never executes commands from the analyzed repository.
@@ -57,13 +58,12 @@ repo-to-codex . --write --force
 
 ## Example
 
-For a Next.js repository with matching scripts, output looks like:
+For a Next.js repository with matching scripts and an npm lockfile, output looks like:
 
 ```text
 Analyzing repository...
 
 ✓ Detected TypeScript
-✓ Detected JavaScript / TypeScript
 ✓ Detected Node.js
 ✓ Detected Next.js
 ✓ Detected React
@@ -111,7 +111,8 @@ The detector architecture is intentionally modular so Go, Rust, and additional f
 - The default mode writes nothing.
 - `--write` refuses to overwrite any existing generated target.
 - `--force` is required for intentional replacement.
-- Large dependency/build directories such as `.git`, `node_modules`, `dist`, `build`, `.next`, virtual environments, and coverage output are excluded from structural inspection.
+- Unknown package managers or commands are omitted rather than guessed.
+- Structural inspection is deliberately shallow and does not traverse dependency/build trees such as `.git`, `node_modules`, `dist`, `build`, `.next`, virtual environments, or coverage output.
 
 ## Contributing
 
