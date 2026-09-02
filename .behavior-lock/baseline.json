@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "checks": [
+    {
+      "type": "command",
+      "name": "cli-help",
+      "exitCode": 0,
+      "signal": null,
+      "stdout": "repo-to-codex [path] [options]\n\nOptions:\n  --write    Write generated files\n  --dry-run  Preview only (default)\n  --force    Allow overwriting generated target files\n  --help     Show help\n",
+      "stderr": ""
+    },
+    {
+      "type": "command",
+      "name": "cli-unknown-option",
+      "exitCode": 1,
+      "signal": null,
+      "stdout": "",
+      "stderr": "\nError: Unknown option: --wat\n"
+    },
+    {
+      "type": "command",
+      "name": "nextjs-preview",
+      "exitCode": 0,
+      "signal": null,
+      "stdout": "Analyzing repository...\n\n✓ Detected TypeScript\n✓ Detected Node.js\n✓ Detected Next.js\n✓ Detected React\n✓ Detected npm\n✓ Found test command\n✓ Found lint command\n✓ Found typecheck command\n✓ Found build command\n\nGenerated preview:\n\n  AGENTS.md\n  .codex/instructions.md\n  .codex/architecture.md\n  .codex/commands.md\n\nRun with --write to save files. Existing files are never overwritten unless --force is also supplied.\n",
+      "stderr": ""
+    }
+  ]
+}

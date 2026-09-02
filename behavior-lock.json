@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "checks": [
+    {
+      "type": "command",
+      "name": "cli-help",
+      "command": "node",
+      "args": ["dist/src/cli/index.js", "--help"]
+    },
+    {
+      "type": "command",
+      "name": "cli-unknown-option",
+      "command": "node",
+      "args": ["dist/src/cli/index.js", "--wat"]
+    },
+    {
+      "type": "command",
+      "name": "nextjs-preview",
+      "command": "node",
+      "args": ["dist/src/cli/index.js", "test/fixtures/nextjs"]
+    }
+  ]
+}
