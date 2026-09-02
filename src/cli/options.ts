@@ -8,7 +8,7 @@ export interface Options {
 const KNOWN_OPTIONS = new Set(['--write', '--dry-run', '--force', '--help', '-h']);
 
 export function printHelp(): void {
-  console.log(`repo-to-codex [path] [options]\n\nOptions:\n  --write    Write generated files\n  --dry-run  Preview only (default)\n  --force    Allow overwriting generated target files\n  --help     Show help`);
+  console.log(`repo-to-codex [path] [options]\n\nOptions:\n  --write    Write generated files\n  --dry-run  Preview only (default)\n  --help     Show help`);
 }
 
 export function parseArgs(argv: string[]): Options {
