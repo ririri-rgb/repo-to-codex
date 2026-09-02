@@ -24,13 +24,14 @@ jobs:
           node dist/src/cli/index.js . | tee /tmp/self-dogfood.txt
           grep -q "Generated preview" /tmp/self-dogfood.txt
           grep -q "Found test command" /tmp/self-dogfood.txt
-      - name: Checkout real repository fixture
+      - name: Checkout real public repository
         uses: actions/checkout@v4
         with:
-          repository: ririri-rgb/claw-code
-          path: dogfood/claw-code
+          repository: vercel/next-learn
+          path: dogfood/next-learn
       - name: Analyze real repository without writing
         run: |
-          node dist/src/cli/index.js dogfood/claw-code | tee /tmp/real-dogfood.txt
+          node dist/src/cli/index.js dogfood/next-learn | tee /tmp/real-dogfood.txt
           grep -q "Generated preview" /tmp/real-dogfood.txt
-          test -z "$(git -C dogfood/claw-code status --porcelain)"
+          grep -q "Detected Next.js" /tmp/real-dogfood.txt
+          test -z "$(git -C dogfood/next-learn status --porcelain)"
