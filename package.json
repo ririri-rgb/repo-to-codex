@@ -4,32 +4,43 @@
   "description": "Turn any repository into a Codex-ready repository in one command.",
   "type": "module",
   "bin": {
-    "repo-to-codex": "./dist/cli.js"
+    "repo-to-codex": "dist/src/cli/index.js"
   },
   "files": [
-    "dist",
+    "dist/src",
     "README.md",
-    "LICENSE"
+    "LICENSE",
+    "CHANGELOG.md"
   ],
   "engines": {
     "node": ">=20"
   },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
     "lint": "eslint .",
-    "test": "vitest run",
-    "test:watch": "vitest",
-    "prepublishOnly": "npm run lint && npm run typecheck && npm test && npm run build"
+    "format": "prettier --check .",
+    "format:write": "prettier --write .",
+    "test": "npm run build && node --test dist/test/**/*.test.js",
+    "prepublishOnly": "npm run lint && npm run typecheck && npm test"
   },
   "keywords": [
     "codex",
-    "ai-agent",
+    "ai",
+    "coding-agent",
+    "agents-md",
     "cli",
-    "repository",
-    "agents-md"
+    "repository-analysis"
   ],
   "license": "MIT",
+  "devDependencies": {
+    "@eslint/js": "^9.35.0",
+    "@types/node": "^22.18.1",
+    "eslint": "^9.35.0",
+    "prettier": "^3.6.2",
+    "typescript": "^5.9.2",
+    "typescript-eslint": "^8.42.0"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ririri-rgb/repo-to-codex.git"
@@ -37,13 +48,5 @@
   "bugs": {
     "url": "https://github.com/ririri-rgb/repo-to-codex/issues"
   },
-  "homepage": "https://github.com/ririri-rgb/repo-to-codex#readme",
-  "devDependencies": {
-    "@eslint/js": "^9.35.0",
-    "@types/node": "^24.3.0",
-    "eslint": "^9.35.0",
-    "typescript": "^5.9.2",
-    "typescript-eslint": "^8.42.0",
-    "vitest": "^3.2.4"
-  }
+  "homepage": "https://github.com/ririri-rgb/repo-to-codex#readme"
 }
